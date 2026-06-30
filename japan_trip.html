@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Trip · July 11–23, 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f7f4; color: #1a1a1a; min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 40px 20px 32px; text-align: center; }
+  .hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+  .hero h1 { font-size: clamp(26px, 5vw, 40px); font-weight: 300; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .hero-sub { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 24px; }
+  .route-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; padding: 16px 20px; background: rgba(255,255,255,0.07); border-radius: 12px; max-width: 640px; margin: 0 auto; }
+  .route-dot { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .route-dot strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+  .route-dot span { color: rgba(255,255,255,0.4); }
+
+  .tabs-wrap { position: sticky; top: 0; z-index: 100; background: white; border-bottom: 1px solid #e5e5e5; box-shadow: 0 1px 6px rgba(0,0,0,0.06); overflow-x: auto; }
+  .tabs { display: flex; max-width: 720px; margin: 0 auto; padding: 0 16px; }
+  .tab-btn { padding: 14px 16px; border: none; background: none; cursor: pointer; font-size: 13px; font-weight: 400; color: #888; border-bottom: 2px solid transparent; transition: all 0.15s; white-space: nowrap; }
+  .tab-btn.active { color: #1a1a1a; font-weight: 500; border-bottom-color: #1a1a1a; }
+
+  .content { max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; }
+  .tab-panel { display: none !important; }
+  .tab-panel.active { display: block !important; }
+
+  .cal-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 16px; font-size: 12px; color: #555; }
+  .leg-item { display: flex; align-items: center; gap: 5px; }
+  .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .cal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .cal-cell { background: white; border-radius: 10px; border: 1px solid #e8e8e8; padding: 12px 12px 10px; cursor: pointer; transition: box-shadow 0.15s, transform 0.1s; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .cal-cell:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.1); transform: translateY(-1px); }
+  .cal-daynum { font-size: 20px; font-weight: 600; color: #1a1a1a; line-height: 1; margin-bottom: 4px; }
+  .cal-dow { font-size: 11px; font-weight: 400; color: #aaa; }
+  .cal-emoji { font-size: 20px; margin-bottom: 4px; }
+  .cal-loc { font-size: 12px; font-weight: 600; margin-bottom: 3px; line-height: 1.3; }
+  .cal-tag { font-size: 10.5px; color: #888; margin-bottom: 6px; }
+  .cal-bullets { list-style: none; padding: 0; margin: 0; font-size: 11px; color: #555; line-height: 1.8; }
+  .cal-bullets li::before { content: "· "; color: #bbb; }
+  .cal-sidenote { margin-top: 7px; font-size: 10.5px; border-left: 2px solid; padding-left: 6px; line-height: 1.4; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: white; border-radius: 14px; padding: 24px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal-close { position: absolute; top: 14px; right: 16px; border: none; background: none; font-size: 18px; cursor: pointer; color: #aaa; }
+  .modal-close:hover { color: #333; }
+  .modal-title { font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+  .modal-sub { font-size: 13px; color: #888; margin-bottom: 16px; }
+  .modal-transport { background: #f7f7f7; border-left: 3px solid #aaa; border-radius: 6px; padding: 9px 12px; font-size: 12.5px; color: #555; margin-bottom: 14px; }
+  .modal-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 9px; }
+  .modal-time { min-width: 52px; font-size: 11px; color: #bbb; font-weight: 500; padding-top: 1px; text-align: right; flex-shrink: 0; }
+  .modal-line { width: 2px; min-height: 18px; border-radius: 2px; flex-shrink: 0; margin-top: 3px; }
+  .modal-text { font-size: 13px; line-height: 1.5; color: #1a1a1a; flex: 1; }
+  .modal-text.note { color: #777; font-style: italic; }
+
+  .bookings-intro { font-size: 13px; color: #777; margin-bottom: 16px; }
+  .booking-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 8px; background: white; }
+  .booking-info { flex: 1; min-width: 0; }
+  .booking-item { font-weight: 500; font-size: 14px; color: #1a1a1a; }
+  .booking-note { font-size: 12px; color: #888; margin-top: 2px; }
+
+  .hotel-card { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .hotel-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+  .hotel-icon { font-size: 28px; flex-shrink: 0; }
+  .hotel-name { font-weight: 600; font-size: 15px; color: #1a1a1a; margin-bottom: 2px; }
+  .hotel-dates { font-size: 12px; color: #888; }
+  .hotel-details { font-size: 12.5px; color: #555; line-height: 1.7; border-top: 1px solid #f0f0f0; padding-top: 10px; margin-top: 4px; }
+  .hotel-detail-row { display: flex; gap: 6px; align-items: flex-start; }
+  .hotel-detail-label { color: #aaa; min-width: 58px; flex-shrink: 0; font-size: 11px; padding-top: 1px; }
+  .map-link { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; color: #1a73e8; font-weight: 500; }
+  .map-link::before { content: "📍"; font-size: 10px; }
+  .booking-block { background:#F9FAFB; border:1px solid #E5E7EB; border-radius:8px; padding:10px 12px; margin-top:8px; }
+  .booking-block + .booking-block { margin-top:6px; }
+  .bb-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; }
+  .bb-conf { font-size:11px; color:#6B7280; }
+  .bb-conf strong { color:#1a1a1a; }
+  .bb-tag { font-size:10.5px; padding:2px 7px; border-radius:4px; font-weight:600; }
+  .bb-green { background:#D1FAE5; color:#065F46; }
+  .bb-price { font-size:13px; font-weight:600; color:#1a1a1a; }
+  .bb-detail { font-size:11px; color:#6B7280; margin-top:3px; }
+  .section-divider { display: flex; align-items: center; gap: 12px; margin: 32px -16px 20px; padding: 16px 20px; color: white; border-radius: 0; }
+  .section-divider-label { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .train-card { background: white; border-radius: 10px; border: 1px solid #e8e8e8; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .train-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+  .train-route { font-weight: 600; font-size: 14px; color: #1a1a1a; }
+  .train-type { font-size: 11px; color: #888; margin-top: 2px; }
+  .train-price { text-align: right; flex-shrink: 0; }
+  .train-price-total { font-size: 15px; font-weight: 700; color: #1a1a1a; }
+  .train-price-each { font-size: 10.5px; color: #888; }
+  .train-detail { font-size: 12px; color: #555; line-height: 1.6; margin-top: 8px; padding-top: 8px; border-top: 1px solid #f0f0f0; }
+  .train-detail-row { display: flex; gap: 6px; }
+  .train-detail-label { color: #aaa; min-width: 64px; flex-shrink: 0; font-size: 11px; }
+  .train-link { display: inline-block; margin-top: 8px; font-size: 11px; color: #1a73e8; font-weight: 500; }
+  .train-total-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1a1a2e; border-radius: 8px; margin-top: 14px; color: white; }
+  .total-row { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#1a1a2e; border-radius:8px; margin-top:16px; color:white; }
+  .total-label { font-size:12px; color:rgba(255,255,255,0.6); }
+  .total-amount { font-size:18px; font-weight:600; }
+
+  /* ── FOOD TAB ── */
+  .fc { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px; }
+  .fcard { background: white; border-radius: 10px; border: 1px solid #e8e8e8; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .fimg { width: 100%; height: 100px; object-fit: cover; display: block; background: #e5e7eb; }
+  .fbody { padding: 9px 11px 11px; flex: 1; display: flex; flex-direction: column; }
+  .ftop { display: flex; justify-content: space-between; align-items: flex-start; gap: 5px; margin-bottom: 4px; }
+  .fname { font-size: 12.5px; font-weight: 600; color: #1a1a1a; line-height: 1.3; }
+  .ftag { font-size: 9.5px; font-weight: 600; padding: 2px 6px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
+  .tm { background: #FEF3C7; color: #92400E; }
+  .th { background: #EDE9FE; color: #5B21B6; }
+  .ts { background: #D1FAE5; color: #065F46; }
+  .tc { background: #DBEAFE; color: #1E40AF; }
+  .td { background: #FCE7F3; color: #9D174D; }
+  .tg { background: #FEE2E2; color: #991B1B; }
+  .fdesc { font-size: 11px; color: #555; line-height: 1.55; flex: 1; }
+  .ftip { margin-top: 5px; font-size: 10px; color: #999; font-style: italic; border-left: 2px solid #e5e5e5; padding-left: 5px; }
+  .flinks { display: flex; gap: 8px; margin-top: 7px; flex-wrap: wrap; }
+  .fl { font-size: 10px; color: #1a73e8; font-weight: 500; }
+  .fl:hover { text-decoration: underline; }
+  .fhdr { display: flex; align-items: center; gap: 12px; margin: 0 -16px 16px; padding: 16px 20px; color: white; }
+  .fdot { width: 12px; height: 12px; border-radius: 50%; background: white; opacity: .85; flex-shrink: 0; }
+  .fsub { font-size: 12px; opacity: .65; margin-left: auto; }
+  .fsep { height: 3px; margin: 24px -16px; }
+
+  /* Personal picks */
+  .picks-hdr { display: flex; align-items: center; gap: 10px; margin: 28px 0 6px; }
+  .picks-hdr-title { font-size: 17px; font-weight: 600; }
+  .picks-sub { font-size: 12px; color: #888; margin-bottom: 14px; }
+  .pick-section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 12px 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .pick-section-label { font-size: 12px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .pick-row { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-top: 1px solid #f3f3f3; }
+  .pick-row:first-of-type { border-top: none; padding-top: 0; }
+      .pick-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid #e8e8e8; }
+  .pick-body { flex: 1; }
+  .pick-cat { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #9ca3af; margin-bottom: 1px; }
+  .pick-name { font-size: 12.5px; font-weight: 600; color: #1a1a1a; margin-bottom: 2px; }
+  .pick-desc { font-size: 11px; color: #666; line-height: 1.5; }
+  .pick-links { display: flex; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
+
+  /* Fun facts */
+  .ff-section { margin-bottom: 28px; }
+  .ff-section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
+  .ff-section-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .ff-section-title { font-size: 17px; font-weight: 600; color: #1a1a1a; }
+  .ff-section-sub { font-size: 12px; color: #aaa; margin-left: 4px; }
+  .ff-card { background: white; border-radius: 10px; border: 1px solid #e8e8e8; padding: 14px 16px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: flex; gap: 12px; align-items: flex-start; }
+  .ff-icon { font-size: 26px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
+  .ff-body { flex: 1; }
+  .ff-title { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+  .ff-text { font-size: 12.5px; color: #555; line-height: 1.65; }
+  .ff-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; margin-bottom: 5px; }
+  .ff-tag-history { background: #FEF3C7; color: #92400E; }
+  .ff-tag-culture { background: #EDE9FE; color: #5B21B6; }
+  .ff-tag-nature { background: #D1FAE5; color: #065F46; }
+  .ff-tag-weird { background: #FCE7F3; color: #9D174D; }
+  .ff-tag-food { background: #DBEAFE; color: #1E40AF; }
+  .ff-tag-record { background: #FEE2E2; color: #991B1B; }
+
+  .practical-card { display: flex; gap: 14px; padding: 14px; border-radius: 10px; border: 1px solid #eee; margin-bottom: 10px; background: white; }
+  .practical-icon { font-size: 24px; flex-shrink: 0; }
+  .practical-title { font-weight: 500; font-size: 14px; color: #1a1a1a; margin-bottom: 3px; }
+  .practical-text { font-size: 13px; color: #666; line-height: 1.55; }
+
+  .todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 6px; cursor: pointer; background: white; transition: all 0.15s; font-size: 13.5px; line-height: 1.5; color: #1a1a1a; }
+  .todo-item.checked { background: #f0fdf4; border-color: #86efac; color: #6b7280; text-decoration: line-through; }
+  .todo-box { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #d1d5db; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; transition: all 0.15s; }
+  .todo-item.checked .todo-box { background: #16a34a; border-color: #16a34a; }
+  .todo-item.checked .todo-box::after { content: "✓"; }
+
+  @media (max-width: 600px) { .cal-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .fc { grid-template-columns: 1fr; } .hero { padding: 28px 16px 24px; } .tab-btn { padding: 12px 8px; font-size: 11px; } }
+  @media (max-width: 400px) { .cal-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">Japan · 13 Days · Family of 6</div>
+  <h1>July 11 – 23, 2026</h1>
+  <p class="hero-sub">Tel Aviv · Tokyo · Takayama · Kamikochi · Shirakawa-go · Kanazawa · Kyoto · Tokyo</p>
+  <div class="route-strip">
+    <div class="route-dot"><div class="dot" style="background:#6B7280"></div><strong>Depart TLV</strong><span>Jul 11</span></div>
+    <div class="route-dot"><div class="dot" style="background:#DC2626"></div><strong>Tokyo</strong><span>Jul 12</span></div>
+    <div class="route-dot"><div class="dot" style="background:#065F46"></div><strong>Takayama</strong><span>Jul 13–15</span></div>
+    <div class="route-dot"><div class="dot" style="background:#1E40AF"></div><strong>Kamikochi</strong><span>Jul 14 (day trip)</span></div>
+    <div class="route-dot"><div class="dot" style="background:#92400E"></div><strong>Shirakawa-go</strong><span>Jul 15 (en route)</span></div>
+    <div class="route-dot"><div class="dot" style="background:#b45309"></div><strong>Kanazawa</strong><span>Jul 15–16</span></div>
+    <div class="route-dot"><div class="dot" style="background:#7C3AED"></div><strong>Kyoto</strong><span>Jul 16–19</span></div>
+    <div class="route-dot"><div class="dot" style="background:#DC2626"></div><strong>Tokyo</strong><span>Jul 19–23</span></div>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('itinerary',this)">Day by day</button>
+    <button class="tab-btn" onclick="switchTab('food',this)">🍜 Food & Drink</button>
+    <button class="tab-btn" onclick="switchTab('hotels',this)">Hotels &amp; Transportation</button>
+    <button class="tab-btn" onclick="switchTab('todo',this)">✅ To-do</button>
+    <button class="tab-btn" onclick="switchTab('funfacts',this)">💡 Fun Facts</button>
+    <button class="tab-btn" onclick="switchTab('practical',this)">Practical tips</button>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══════════════ ITINERARY ═══════════════ -->
+<div id="tab-itinerary" class="tab-panel active">
+  <div class="cal-legend">
+    <div class="leg-item"><span class="leg-dot" style="background:#6B7280"></span>Departure</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#DC2626"></span>Tokyo</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#065F46"></span>Takayama</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#1E40AF"></span>Kamikochi</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#92400E"></span>Shirakawa-go / Kanazawa</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#7C3AED"></span>Kyoto</div>
+    <div class="leg-item"><span class="leg-dot" style="background:#0891B2"></span>Avi &amp; Roni</div>
+  </div>
+  <div class="cal-grid">
+    <div class="cal-cell" style="border-top:3px solid #6B7280" onclick="openModal('m11')"><div class="cal-daynum">11 <span class="cal-dow">Fri</span></div><div class="cal-emoji">✈️</div><div class="cal-loc" style="color:#6B7280">Depart Tel Aviv</div><div class="cal-tag">EK2451 TLV→DXB 19:25</div><ul class="cal-bullets"><li>Depart TLV 19:25</li><li>Land Dubai 00:10 (+1)</li><li>Connect EK318 → Tokyo</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #DC2626" onclick="openModal('m12')"><div class="cal-daynum">12 <span class="cal-dow">Sat</span></div><div class="cal-emoji">🗼</div><div class="cal-loc" style="color:#DC2626">Tokyo</div><div class="cal-tag">Arrive Narita 17:35</div><ul class="cal-bullets"><li>N'EX → Tokyo Station</li><li>Hotel Intergate Kyobashi</li><li>Dinner &amp; sleep</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #065F46" onclick="openModal('m13')"><div class="cal-daynum">13 <span class="cal-dow">Sun</span></div><div class="cal-emoji">⛰️</div><div class="cal-loc" style="color:#065F46">Takayama</div><div class="cal-tag">🚅 Tokyo → Takayama, arr. 13:15</div><ul class="cal-bullets"><li>Sanmachi Suji</li><li>Takayama Jinya</li><li>Hida Folk Village</li><li>Hida beef kaiseki dinner</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #1E40AF" onclick="openModal('m14')"><div class="cal-daynum">14 <span class="cal-dow">Mon</span></div><div class="cal-emoji">🏔️</div><div class="cal-loc" style="color:#1E40AF">Kamikochi day trip</div><div class="cal-tag">Bus 07:00 from Takayama</div><ul class="cal-bullets"><li>Kappa-bashi Bridge</li><li>Alpine hike</li><li>Taisho Pond</li><li>Return ~17:30</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #92400E" onclick="openModal('m15')"><div class="cal-daynum">15 <span class="cal-dow">Tue</span></div><div class="cal-emoji">🛖</div><div class="cal-loc" style="color:#92400E">Shirakawa-go → Kanazawa</div><div class="cal-tag">🚌 UNESCO stop en route</div><ul class="cal-bullets"><li>Shirakawa-go village</li><li>Nagamachi Samurai District</li><li>Higashi Chaya + gold leaf</li><li>Omicho Market + seafood dinner</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #7C3AED" onclick="openModal('m16')"><div class="cal-daynum">16 <span class="cal-dow">Wed</span></div><div class="cal-emoji">🎏</div><div class="cal-loc" style="color:#7C3AED">Kanazawa → Kyoto</div><div class="cal-tag">🚅 Arr. Kyoto ~12:30</div><ul class="cal-bullets"><li>Kenroku-en Garden (dawn)</li><li>Kanazawa Castle</li><li>Kiyomizu-dera</li><li>Yoiyama festival 🎏</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #7C3AED" onclick="openModal('m17')"><div class="cal-daynum">17 <span class="cal-dow">Thu</span></div><div class="cal-emoji">🏯</div><div class="cal-loc" style="color:#7C3AED">Kyoto</div><div class="cal-tag">Bamboo Grove at dawn + Grand Parade</div><ul class="cal-bullets"><li>🎋 Arashiyama 06:30 (dawn)</li><li>% Arabica river coffee</li><li>🎏 Yamahoko Parade 9am</li><li>Gion / Pontocho evening</li></ul><div class="cal-sidenote" style="border-color:#0891B2;color:#0891B2">🧳 Avi picks up Roni at Narita 18:30</div></div>
+    <div class="cal-cell" style="border-top:3px solid #0891B2;background:linear-gradient(135deg,#f0f9ff,#e0f2fe)" onclick="openModal('mavi')"><div class="cal-daynum">17 <span class="cal-dow">Thu</span></div><div class="cal-emoji">🧳</div><div class="cal-loc" style="color:#0891B2">Avi &amp; Roni</div><div class="cal-tag">Side trip</div><ul class="cal-bullets"><li>Avi departs Kyoto 14:00</li><li>Roni lands 17:35</li><li>Meet at Narita 18:30</li><li>Return Kyoto ~23:15</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #7C3AED" onclick="openModal('m18')"><div class="cal-daynum">18 <span class="cal-dow">Fri</span></div><div class="cal-emoji">🍵</div><div class="cal-loc" style="color:#7C3AED">Kyoto</div><div class="cal-tag">Culture day</div><ul class="cal-bullets"><li>Fushimi Inari (early)</li><li>Kinkaku-ji + Ryoan-ji</li><li>Tea ceremony</li><li>Philosopher's Path</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #DC2626" onclick="openModal('m19')"><div class="cal-daynum">19 <span class="cal-dow">Sat</span></div><div class="cal-emoji">🚅</div><div class="cal-loc" style="color:#DC2626">Kyoto → Tokyo</div><div class="cal-tag">🚅 Arr. Tokyo ~13:15</div><ul class="cal-bullets"><li>Yasaka Shrine morning</li><li>Shibuya Crossing</li><li>Shibuya Sky</li><li>Piss Alley dinner</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #DC2626" onclick="openModal('m20')"><div class="cal-daynum">20 <span class="cal-dow">Sun</span></div><div class="cal-emoji">🏙️</div><div class="cal-loc" style="color:#DC2626">Tokyo</div><div class="cal-tag">Tokyo day 1</div><ul class="cal-bullets"><li>Harajuku + Meiji Shrine</li><li>Akihabara</li><li>Asakusa</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #DC2626" onclick="openModal('m21')"><div class="cal-daynum">21 <span class="cal-dow">Mon</span></div><div class="cal-emoji">🏙️</div><div class="cal-loc" style="color:#DC2626">Tokyo</div><div class="cal-tag">Tokyo day 2</div><ul class="cal-bullets"><li>Tsukiji Market breakfast</li><li>TeamLab Planets 11:30 ✅</li><li>Ginza shopping</li><li>TeamLab Borderless (Odaiba)</li><li>JDM Daikoku PA night</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #DC2626" onclick="openModal('m22')"><div class="cal-daynum">22 <span class="cal-dow">Tue</span></div><div class="cal-emoji">🏙️</div><div class="cal-loc" style="color:#DC2626">Tokyo</div><div class="cal-tag">Tokyo day 3</div><ul class="cal-bullets"><li>Sumo keiko viewing</li><li>Shinjuku / Shimokitazawa</li><li>Shibuya evening rush</li><li>Golden Gai night</li></ul></div>
+    <div class="cal-cell" style="border-top:3px solid #6B7280" onclick="openModal('m23')"><div class="cal-daynum">23 <span class="cal-dow">Wed</span></div><div class="cal-emoji">✈️</div><div class="cal-loc" style="color:#6B7280">Tokyo → Home</div><div class="cal-tag">Departure · EK313 HND 00:05</div><ul class="cal-bullets"><li>Free day in Tokyo</li><li>Leave hotel ~22:00</li><li>Keikyu Line → Haneda</li></ul></div>
+  </div>
+  <div id="modal-overlay" class="modal-overlay" onclick="closeModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOD & DRINK ═══════════════ -->
+<div id="tab-food" class="tab-panel">
+
+  <!-- TAKAYAMA -->
+  <div class="fhdr" style="background:linear-gradient(135deg,#065F46,#047857)"><div class="fdot"></div><div style="font-size:18px;font-weight:600">Takayama</div><div class="fsub">Jul 13–14</div></div>
+  <div class="fc">
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Houba_miso_yaki.jpg/320px-Houba_miso_yaki.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Suzuya — Hida Beef Houba Miso</div><span class="ftag tm">Must-do</span></div><div class="fdesc">Hida beef on a magnolia leaf over charcoal with miso. Theatrical, delicious, deeply local.</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Suzuya+restaurant+Takayama" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Zaru_soba.jpg/320px-Zaru_soba.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Mitsu — Handmade Soba</div><span class="ftag th">Local Gem</span></div><div class="fdesc">Cold buckwheat noodles with dipping broth. One of the quiet pleasures of the Japanese countryside.</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Mitsu+soba+Takayama" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Sake_tasting_Takayama.jpg/320px-Sake_tasting_Takayama.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Sake Brewery Hopping</div><span class="ftag tg">Group</span></div><div class="fdesc">Funasaka &amp; Harada have self-serve tasting machines. Over a dozen breweries in the old town.</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Funasaka+Sake+Brewery+Takayama" target="_blank">📍 Funasaka</a><a class="fl" href="https://maps.google.com/?q=Harada+Sake+Brewery+Takayama" target="_blank">📍 Harada</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Korean_BBQ_Yakiniku.jpg/320px-Korean_BBQ_Yakiniku.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Hida Beef BBQ Dinner</div><span class="ftag tm">Must-do</span></div><div class="fdesc">End the Kamikochi day with prized regional wagyu BBQ.</div><div class="ftip">💡 Jul 14 evening — already in the plan</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Hida+beef+BBQ+Takayama" target="_blank">📍 Find nearby</a></div></div></div>
+  </div>
+
+  <div class="fsep" style="background:linear-gradient(90deg,#065F46,#92400E)"></div>
+
+  <!-- KANAZAWA -->
+  <div class="fhdr" style="background:linear-gradient(135deg,#92400E,#b45309)"><div class="fdot"></div><div style="font-size:18px;font-weight:600">Kanazawa</div><div class="fsub">Jul 15</div></div>
+  <div class="fc">
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Kaisendon_Kanazawa.jpg/320px-Kaisendon_Kanazawa.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Omicho Market — Kaisen-don</div><span class="ftag tm">Must-do</span></div><div class="fdesc">Raw fish rice bowl piled with crab, uni and Sea of Japan seafood. Arguably better than Tsukiji.</div><div class="ftip">💡 Jul 15 — already in the plan</div><div class="flinks"><a class="fl" href="https://www.ohmicho-ichiba.com/" target="_blank">🌐 Official</a><a class="fl" href="https://maps.google.com/?q=Omicho+Market+Kanazawa" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sushi_platter.jpg/320px-Sushi_platter.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Omakase Sushi</div><span class="ftag tm">Must-do</span></div><div class="fdesc">Rivals Tokyo at half the price. Pristine Sea of Japan fish daily.</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=omakase+sushi+Kanazawa" target="_blank">📍 Find nearby</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Gold_leaf_soft_serve_ice_cream_Kanazawa.jpg/320px-Gold_leaf_soft_serve_ice_cream_Kanazawa.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Gold Leaf Soft Serve</div><span class="ftag ts">Street Food</span></div><div class="fdesc">Soft-serve topped with 24-karat edible gold leaf. Iconic photo moment.</div><div class="ftip">💡 Higashi Chaya, Jul 15 afternoon</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Higashi+Chaya+District+Kanazawa" target="_blank">📍 Higashi Chaya</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Japanese_restaurant_interior.jpg/320px-Japanese_restaurant_interior.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">HUNI</div><span class="ftag th">Hidden Gem</span></div><div class="fdesc">Sleek modern dining bar with river views. Japanese-European fusion.</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=HUNI+Kanazawa" target="_blank">📍 Map</a></div></div></div>
+  </div>
+
+  <div class="fsep" style="background:linear-gradient(90deg,#92400E,#7C3AED)"></div>
+
+  <!-- KYOTO -->
+  <div class="fhdr" style="background:linear-gradient(135deg,#7C3AED,#6D28D9)"><div class="fdot"></div><div style="font-size:18px;font-weight:600">Kyoto</div><div class="fsub">Jul 16–18</div></div>
+  <div class="fc">
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/320px-A_small_cup_of_coffee.JPG" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">% Arabica (Arashiyama)</div><span class="ftag tc">Coffee</span></div><div class="fdesc">The original % Arabica on the Oi River. Get your coffee, walk to the bamboo grove.</div><div class="ftip">💡 Jul 17 dawn — after the 06:30 grove</div><div class="flinks"><a class="fl" href="https://arabica.com/en/location/arabica-kyoto-arashiyama/" target="_blank">🌐 Official</a><a class="fl" href="https://maps.google.com/?q=Arabica+Arashiyama+Kyoto" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Nishiki_Market_Kyoto.jpg/320px-Nishiki_Market_Kyoto.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Nishiki Market</div><span class="ftag ts">Street Food</span></div><div class="fdesc">Kyoto's 400-year-old kitchen. Graze on tamago, pickled veg, yuba tofu and mochi.</div><div class="ftip">💡 Jul 16 afternoon — already in the plan</div><div class="flinks"><a class="fl" href="https://www.kyoto-nishiki.or.jp/en/" target="_blank">🌐 Official</a><a class="fl" href="https://maps.google.com/?q=Nishiki+Market+Kyoto" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Pontocho_alley_Kyoto_night.jpg/320px-Pontocho_alley_Kyoto_night.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Pontocho Alley</div><span class="ftag tm">Must-do</span></div><div class="fdesc">Kamo-gawa terrace dining over the river. Lantern light, cool breezes, unforgettable.</div><div class="ftip">💡 Jul 17 evening — book ahead</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Pontocho+Kyoto" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Kaiseki_Kikunoi.jpg/320px-Kaiseki_Kikunoi.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Kaiseki Dinner — Kikunoi</div><span class="ftag tm">Must-do</span></div><div class="fdesc">8–12 courses of seasonal Japanese haute cuisine. Bucket-list Kyoto experience.</div><div class="ftip">💡 Jul 18 evening — already in the plan</div><div class="flinks"><a class="fl" href="https://kikunoi.jp/en/" target="_blank">🌐 Kikunoi</a><a class="fl" href="https://maps.google.com/?q=Kikunoi+Kyoto" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Bowl_of_matcha_and_sweets.jpg/320px-Bowl_of_matcha_and_sweets.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Maiko Tea Ceremony (Gion)</div><span class="ftag tg">Group</span></div><div class="fdesc">Private tea session with a Maiko (apprentice Geisha). Matcha and wagashi sweets.</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Gion+tea+ceremony+Kyoto" target="_blank">📍 Gion area</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Tempura_assortment.jpg/320px-Tempura_assortment.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Tempura Matsu</div><span class="ftag th">Hidden Gem</span></div><div class="fdesc">Incredible riverside tempura with theatrical, artistic presentation.</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Tempura+Matsu+Kyoto" target="_blank">📍 Map</a></div></div></div>
+  </div>
+
+  <div class="fsep" style="background:linear-gradient(90deg,#7C3AED,#DC2626)"></div>
+
+  <!-- TOKYO -->
+  <div class="fhdr" style="background:linear-gradient(135deg,#DC2626,#B91C1C)"><div class="fdot"></div><div style="font-size:18px;font-weight:600">Tokyo</div><div class="fsub">Jul 19–23</div></div>
+  <div class="fc">
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Sushi_chef%2C_Kyoto%2C_Japan_%282014%29.jpg/320px-Sushi_chef%2C_Kyoto%2C_Japan_%282014%29.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Tsukiji Outer Market</div><span class="ftag tm">Must-do</span></div><div class="fdesc">The world's best sushi breakfast. Arrive by 8am, stall-hop for tuna, uni and tamago.</div><div class="ftip">💡 Jul 21 morning</div><div class="flinks"><a class="fl" href="https://www.tsukiji.or.jp/english/" target="_blank">🌐 Official</a><a class="fl" href="https://maps.google.com/?q=Tsukiji+Outer+Market+Tokyo" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Tempura_platter.jpg/320px-Tempura_platter.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Tempura Daikokuya</div><span class="ftag tm">Must-do</span></div><div class="fdesc">Asakusa institution since 1887. Dark, rich sesame-oil tempura.</div><div class="ftip">💡 Jul 20 Asakusa afternoon</div><div class="flinks"><a class="fl" href="https://www.daikokuya-main.jp/" target="_blank">🌐 Official</a><a class="fl" href="https://maps.google.com/?q=Daikokuya+Asakusa+tempura" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Shoyu_ramen_noodle_soup.jpg/320px-Shoyu_ramen_noodle_soup.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Ramen: Fuunji or Afuri</div><span class="ftag tm">Must-do</span></div><div class="fdesc">Fuunji for legendary tsukemen. Afuri for yuzu shio — bright and citrusy.</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Fuunji+ramen+Shinjuku" target="_blank">📍 Fuunji</a><a class="fl" href="https://maps.google.com/?q=Afuri+ramen+Tokyo" target="_blank">📍 Afuri</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Omoide_Yokocho_Shinjuku_Tokyo.jpg/320px-Omoide_Yokocho_Shinjuku_Tokyo.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Omoide Yokocho (Piss Alley)</div><span class="ftag tm">Must-do</span></div><div class="fdesc">Shinjuku's legendary yakitori alley. Smoke, Sapporo draft, most atmospheric eating in Tokyo.</div><div class="ftip">💡 Jul 19 &amp; 22 — go twice</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Omoide+Yokocho+Shinjuku+Tokyo" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Golden_Gai_alley_Shinjuku.jpg/320px-Golden_Gai_alley_Shinjuku.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Golden Gai</div><span class="ftag td">Drinks</span></div><div class="fdesc">200+ tiny themed bars in six Shinjuku alleyways. Pick a door at random.</div><div class="ftip">💡 Jul 22 final night</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Golden+Gai+Shinjuku+Tokyo" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Cocktail_bar_Japan.jpg/320px-Cocktail_bar_Japan.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Bar High Five (Ginza)</div><span class="ftag td">Drinks</span></div><div class="fdesc">World-famous "no menu" cocktail bar. The bartender creates something bespoke just for you.</div><div class="flinks"><a class="fl" href="https://www.theworlds50best.com/discovery/Establishments/Japan/Tokyo/High-Five.html" target="_blank">🌐 50 Best</a><a class="fl" href="https://maps.google.com/?q=Bar+High+Five+Ginza+Tokyo" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/320px-A_small_cup_of_coffee.JPG" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">% Arabica (Omotesando)</div><span class="ftag tc">Coffee</span></div><div class="fdesc">Kyoto-born specialty coffee in a minimalist Tokyo flagship. Best flat white in the city.</div><div class="flinks"><a class="fl" href="https://arabica.com/en/" target="_blank">🌐 Official</a><a class="fl" href="https://maps.google.com/?q=Arabica+Omotesando+Tokyo" target="_blank">📍 Map</a></div></div></div>
+    <div class="fcard"><img class="fimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Onigiri-1.jpg/320px-Onigiri-1.jpg" onerror="this.style.display='none'" alt=""><div class="fbody"><div class="ftop"><div class="fname">Haneda Edo Market</div><span class="ftag ts">Last Stop</span></div><div class="fdesc">Terminal 3's Edo-style market — wagashi, Tokyo Banana, last ramen. Budget ¥5,000–10,000 for omiyage.</div><div class="ftip">💡 Jul 23 night before the flight</div><div class="flinks"><a class="fl" href="https://maps.google.com/?q=Tokyo+Haneda+Airport+Terminal+3" target="_blank">📍 HND T3</a></div></div></div>
+  </div>
+
+  <!-- PERSONAL PICKS -->
+  <div class="picks-hdr"><div style="font-size:22px">⭐</div><div class="picks-hdr-title">Personal Picks — Tokyo</div></div>
+  <p class="picks-sub">Curated recommendations from someone who knows the city well</p>
+
+  <div class="pick-section">
+    <div class="pick-section-label">🌟 Michelin Affordable</div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Michelin Quality · Budget Friendly</div>
+        <div class="pick-name">Affordable Michelin Restaurant</div>
+        <div class="pick-desc">A Michelin-quality experience without the high price tag — the sweet spot of Tokyo dining.</div>
+        <div class="pick-links"><a class="fl" href="https://share.google/v6tVrxRukUjCVnxvX" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pick-section">
+    <div class="pick-section-label">🏮 Local Vibe</div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Where Locals Eat</div>
+        <div class="pick-name">Local Neighbourhood Spot</div>
+        <div class="pick-desc">No tourist menus, no English signs — just great food and authentic atmosphere.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/TTsLJuZoZJ4zqYBW6" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pick-section">
+    <div class="pick-section-label">🥃 Whisky &amp; Records Bars</div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Bar #1</div>
+        <div class="pick-name">Whisky &amp; Vinyl Bar (1)</div>
+        <div class="pick-desc">Rare Japanese whisky while vinyl plays in the background. The ultimate Tokyo night.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/YeYNviTZ654QJet89" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Bar #2</div>
+        <div class="pick-name">Whisky &amp; Vinyl Bar (2)</div>
+        <div class="pick-desc">Different neighbourhood, same magic of whisky and warm analog sound.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/tL64vQD155dvoFUh7" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pick-section">
+    <div class="pick-section-label">🔥 Bourdain Vibe</div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Spot #1</div>
+        <div class="pick-name">No-frills, All-flavour (1)</div>
+        <div class="pick-desc">Counter seating, no fuss, transcendent food. The kind of place Anthony Bourdain would have loved.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/VrUMNFppK1JYj9Pf8" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Spot #2</div>
+        <div class="pick-name">No-frills, All-flavour (2)</div>
+        <div class="pick-desc">Another hole-in-the-wall gem — the kind only locals know about.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/q8bcSBab22nvcM418" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pick-section">
+    <div class="pick-section-label">🌙 Arrive at 22:45</div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Late Night</div>
+        <div class="pick-name">Late Night Spot</div>
+        <div class="pick-desc">Arrive at 22:45 — this place is hitting its stride at that hour. The ultimate Tokyo after-dark experience.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/wRcSuXS8vH68bagU9" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pick-section">
+    <div class="pick-section-label">☕🍺 Coffee / Beer at Noon</div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Spot 1 of 5</div>
+        <div class="pick-name">Coffee &amp; Beer at Noon (1)</div>
+        <div class="pick-desc">Specialty coffee in the morning, cold craft beer from noon. The ideal Tokyo midday reset.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/6ZL7t17j3AamVq6A6" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Spot 2 of 5</div>
+        <div class="pick-name">Coffee &amp; Beer at Noon (2)</div>
+        <div class="pick-desc">Neighbourhood café-bar hybrid — great coffee, cold beer, very Tokyo vibe.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/Ne3u16cPuuvNT3kG8" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Spot 3 of 5</div>
+        <div class="pick-name">Coffee &amp; Beer at Noon (3)</div>
+        <div class="pick-desc">A third option — different neighbourhood, same midday energy.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/EQDMGVdqzfKUcDGh6" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Spot 4 of 5</div>
+        <div class="pick-name">Coffee &amp; Beer at Noon (4)</div>
+        <div class="pick-desc">Natural wine, craft beer or single origin coffee — covers all bases depending on mood.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/hzykRC1tCBWQqv8r5" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+    <div class="pick-row">
+      <img class="pick-avatar" src="ben.png" alt="Ben">
+      <div class="pick-body">
+        <div class="pick-cat">Spot 5 of 5</div>
+        <div class="pick-name">Coffee &amp; Beer at Noon (5)</div>
+        <div class="pick-desc">Round out the list — pick whichever is closest to where you find yourself at noon.</div>
+        <div class="pick-links"><a class="fl" href="https://maps.app.goo.gl/qajVU8QxViL5ijJq8" target="_blank">📍 View on Google Maps</a></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end food tab -->
+
+<!-- ═══════════════ HOTELS & TRANSPORTATION ═══════════════ -->
+<div id="tab-hotels" class="tab-panel">
+  <p class="bookings-intro">All hotels confirmed for the trip.</p>
+  <div class="hotel-card"><div class="hotel-header"><div class="hotel-icon">🏨</div><div><div class="hotel-name">Hotel Intergate Tokyo Kyobashi</div><div class="hotel-dates">Tokyo · Jul 12 · 1 night</div></div></div><div class="hotel-details"><div class="hotel-detail-row"><span class="hotel-detail-label">Address</span><span>3-7-8 Kyobashi, Chuo-ku, Tokyo · <a class="map-link" href="https://maps.google.com/?q=Hotel+Intergate+Tokyo+Kyobashi" target="_blank">Google Maps</a></span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Access</span><span>1 min walk from Kyobashi Station · 10 min from Tokyo Station</span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Tel</span><span>+81 3-5524-2929</span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Note</span><span>Near Tokyo Station — perfect for early Shinkansen departure Jul 13</span></div></div><div class="booking-block"><div class="bb-row"><div><div class="bb-conf">Confirmation <strong>#5426196216</strong></div><div class="bb-detail">2 rooms · Breakfast included</div></div><div style="text-align:right"><div class="bb-price">$377</div><span class="bb-tag bb-green">Free cancellation</span></div></div></div></div>
+  <div class="hotel-card"><div class="hotel-header"><div class="hotel-icon">🏨</div><div><div class="hotel-name">HOTEL AMANEK Hida Takayama</div><div class="hotel-dates">Takayama · Jul 13–14 · 2 nights</div></div></div><div class="hotel-details"><div class="hotel-detail-row"><span class="hotel-detail-label">Address</span><span>4-75-3 Hanazato-cho, Takayama · <a class="map-link" href="https://maps.google.com/?q=HOTEL+AMANEK+Hida+Takayama" target="_blank">Google Maps</a></span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Access</span><span>3 min walk from JR Takayama Station</span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Tel</span><span>+81 577-57-7722</span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Highlights</span><span>Rooftop onsen with mountain views · Local Hida breakfast buffet</span></div></div><div class="booking-block"><div class="bb-row"><div><div class="bb-conf">Confirmation <strong>#5955352559</strong></div><div class="bb-detail">2 rooms · Breakfast included</div></div><div style="text-align:right"><div class="bb-price">$591</div><span class="bb-tag bb-green">Free cancellation</span></div></div></div></div>
+  <div class="hotel-card"><div class="hotel-header"><div class="hotel-icon">🏨</div><div><div class="hotel-name">The Sanaraku Hotel (Hotel Sanraku Kanazawa)</div><div class="hotel-dates">Kanazawa · Jul 15 · 1 night</div></div></div><div class="hotel-details"><div class="hotel-detail-row"><span class="hotel-detail-label">Address</span><span>Near Kanazawa Castle Park · <a class="map-link" href="https://maps.google.com/?q=THE+HOTEL+SANRAKU+KANAZAWA" target="_blank">Google Maps</a></span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Access</span><span>Bus from Kanazawa Station → Kenroku Motomachi, 5 min walk</span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Tel</span><span>+81 76-222-8077</span></div></div><div class="booking-block"><div class="bb-row"><div><div class="bb-conf">Confirmation <strong>#5666071738</strong></div><div class="bb-detail">2 rooms · Breakfast included</div></div><div style="text-align:right"><div class="bb-price">$436</div><span class="bb-tag bb-green">Free cancellation</span></div></div></div></div>
+  <div class="hotel-card"><div class="hotel-header"><div class="hotel-icon">🏨</div><div><div class="hotel-name">The Cross Hotel Kyoto</div><div class="hotel-dates">Kyoto · Jul 16–19 · 3 nights</div></div></div><div class="hotel-details"><div class="hotel-detail-row"><span class="hotel-detail-label">Address</span><span>71-1 Daikokucho, Nakagyo-ku, Kyoto · <a class="map-link" href="https://maps.google.com/?q=Cross+Hotel+Kyoto" target="_blank">Google Maps</a></span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Access</span><span>6 min walk from Sanjo Station (Keihan)</span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Note</span><span>Roni joins Jul 17/18 · 10 min walk to Gion</span></div></div><div class="booking-block"><div class="bb-row"><div><div class="bb-conf">Confirmation <strong>#5789692725</strong></div><div class="bb-detail">2 rooms · Jul 16–17 · Breakfast included</div></div><div style="text-align:right"><div class="bb-price">$565</div><span class="bb-tag bb-green">Free cancellation</span></div></div></div><div class="booking-block"><div class="bb-row"><div><div class="bb-conf">Confirmation <strong>#5719122328</strong></div><div class="bb-detail">3 rooms · Jul 17–19 · Breakfast included</div></div><div style="text-align:right"><div class="bb-price">$1,220</div><span class="bb-tag bb-green">Free cancellation</span></div></div></div></div>
+  <div class="hotel-card"><div class="hotel-header"><div class="hotel-icon">🏨</div><div><div class="hotel-name">Hotel Groove Shinjuku (a PARKROYAL Hotel)</div><div class="hotel-dates">Tokyo · Jul 19–23 · 4 nights</div></div></div><div class="hotel-details"><div class="hotel-detail-row"><span class="hotel-detail-label">Address</span><span>1-29-1 Kabukicho, Shinjuku-ku, Tokyo · <a class="map-link" href="https://maps.google.com/?q=Hotel+Groove+Shinjuku+Kabukicho+Tokyo" target="_blank">Google Maps</a></span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Access</span><span>1 min walk from Seibu Shinjuku Station</span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Tel</span><span>+81 3-6233-8888</span></div><div class="hotel-detail-row"><span class="hotel-detail-label">Note</span><span>Leave by 22:00 on Jul 23 for Haneda flight</span></div></div><div class="booking-block"><div class="bb-row"><div><div class="bb-conf">Confirmation <strong>#6323946592</strong></div><div class="bb-detail">2 rooms · Breakfast included</div></div><div style="text-align:right"><div class="bb-price">$3,548</div><span class="bb-tag bb-green">Free cancellation</span></div></div></div><div class="booking-block"><div class="bb-row"><div><div class="bb-conf">Confirmation <strong>#5955394434</strong></div><div class="bb-detail">1 room · Breakfast included</div></div><div style="text-align:right"><div class="bb-price">$1,358</div><span class="bb-tag bb-green">Free cancellation</span></div></div></div></div>
+  <div class="total-row"><div><div class="total-label">Total hotel spend</div><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">7 bookings · All free cancellation · Breakfast included</div></div><div class="total-amount">$8,095</div></div>
+
+  <div class="section-divider" style="background:linear-gradient(135deg,#DC2626,#B91C1C)"><div class="section-divider-label">✈️ Flights</div></div>
+
+  <p class="bookings-intro">All Emirates flights. <strong>Outbound departs Haneda (HND)</strong> — not Narita.</p>
+  <div style="margin-bottom:20px"><div style="display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;color:#065F46;background:#D1FAE5;padding:5px 12px;border-radius:6px;margin-bottom:12px">Inbound — Main group</div>
+    <div class="booking-card" style="flex-direction:column;gap:4px;align-items:flex-start"><div style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:6px"><div><div class="booking-item">Tel Aviv (TLV) → Dubai (DXB)</div><div class="booking-note">Emirates EK2451 · Fri Jul 11</div></div><div class="booking-item">19:25 → 00:10 <span style="font-size:11px;font-weight:400;color:#888">(+1)</span></div></div></div>
+    <div class="booking-card" style="flex-direction:column;gap:4px;align-items:flex-start"><div style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:6px"><div><div class="booking-item">Dubai (DXB) → Tokyo Narita (NRT)</div><div class="booking-note">Emirates EK318 · Sat Jul 12</div></div><div class="booking-item">02:40 → 17:35</div></div></div>
+  </div>
+  <div style="margin-bottom:20px"><div style="display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;color:#065F46;background:#D1FAE5;padding:5px 12px;border-radius:6px;margin-bottom:12px">Inbound — Roni</div>
+    <div class="booking-card" style="flex-direction:column;gap:4px;align-items:flex-start"><div style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:6px"><div><div class="booking-item">Tel Aviv (TLV) → Dubai (DXB)</div><div class="booking-note">Emirates EK2451 · Wed Jul 16</div></div><div class="booking-item">19:25 → 00:10 <span style="font-size:11px;font-weight:400;color:#888">(+1)</span></div></div></div>
+    <div class="booking-card" style="flex-direction:column;gap:4px;align-items:flex-start"><div style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:6px"><div><div class="booking-item">Dubai (DXB) → Tokyo Narita (NRT)</div><div class="booking-note">Emirates EK318 · Thu Jul 17 · Avi picks up at Narita 18:30</div></div><div class="booking-item">02:40 → 17:35</div></div></div>
+  </div>
+  <div style="margin-bottom:20px"><div style="display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;color:#7C3AED;background:#EDE9FE;padding:5px 12px;border-radius:6px;margin-bottom:12px">Outbound — All</div>
+    <div class="booking-card" style="flex-direction:column;gap:4px;align-items:flex-start"><div style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:6px"><div><div class="booking-item">Tokyo Haneda (HND) → Dubai (DXB)</div><div class="booking-note">Emirates EK313 · Wed Jul 23 night / Thu Jul 24</div></div><div class="booking-item">00:05 → 05:40</div></div></div>
+    <div class="booking-card" style="flex-direction:column;gap:4px;align-items:flex-start"><div style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:6px"><div><div class="booking-item">Dubai (DXB) → Tel Aviv (TLV)</div><div class="booking-note">Emirates EK2268 · Thu Jul 24</div></div><div class="booking-item">07:40 → 10:25</div></div></div>
+  </div>
+  <div style="font-size:12px;color:#666;padding:10px 14px;background:#f7f7f7;border-radius:8px">💡 <strong>Haneda transfer:</strong> Keikyu Line from Shinjuku (~35 min, ¥610). Leave Hotel Groove Shinjuku by 22:00 on Jul 23.</div>
+
+  <div class="section-divider" style="background:linear-gradient(135deg,#1E40AF,#1E3A8A)"><div class="section-divider-label">🚅 Trains</div></div>
+
+  <p class="bookings-intro">All Shinkansen, Limited Express, and Narita Express tickets booked via shinkansen-ticket.com. <span style="color:#999">(Converted at ¥161.94 = $1, Jun 29, 2026 rate)</span></p>
+  <div style="font-size:12px;color:#555;padding:10px 14px;background:#EFF6FF;border-radius:8px;margin-bottom:16px;border:1px solid #DBEAFE">📋 <strong>Order #91716</strong> · Confirmation <strong>RHV0XNZJV</strong></div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Tokyo → Nagoya (NOZOMI)</div><div class="train-type">Reserved · Shinkansen Ticket · QR Ticket</div></div><div class="train-price"><div class="train-price-total">$369</div><div class="train-price-each">$92.25 × 4</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 13, 2026 · Depart 08:30–08:44</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Seats</span><span>Mt. Fuji side · oversized luggage storage (not guaranteed)</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Backup</span><span>If unavailable: earlier time slot</span></div>
+    </div>
+    <a class="train-link" href="https://shinkansen-ticket.com/products/shinkansenticket-tokyo-nagoya?variant=49748545700161&sso=silent" target="_blank">🎫 View / manage booking</a>
+  </div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Nagoya → Takayama (Hida Limited Express)</div><div class="train-type">Reserved · QR Voucher</div></div><div class="train-price"><div class="train-price-total">$233</div><div class="train-price-each">$58.18 × 4</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 13, 2026 · Nagoya 10:48 → Takayama 13:12</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Backup</span><span>Nagoya 11:43 → Takayama 14:14</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Group</span><span>OK to be seated apart, time is priority</span></div>
+    </div>
+    <a class="train-link" href="https://shinkansen-ticket.com/products/limitedexpressticket-nagoya-takayama?variant=50287611773249&sso=silent" target="_blank">🎫 View / manage booking</a>
+  </div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Kanazawa → Kyoto (Shinkansen + Thunderbird)</div><div class="train-type">Reserved · Train Package · QR Voucher</div></div><div class="train-price"><div class="train-price-total">$282</div><div class="train-price-each">$70.40 × 4</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 16, 2026</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Route</span><span>Kanazawa 12:05 → Tsuruga 13:02 → 13:14 → Kyoto 14:09</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Backup</span><span>Kanazawa 13:05 → Tsuruga 14:02 → 14:14 → Kyoto 15:09</span></div>
+    </div>
+    <a class="train-link" href="https://shinkansen-ticket.com/products/trainpackage-kanazawa-kyoto?variant=50089780281665&sso=silent" target="_blank">🎫 View / manage booking</a>
+  </div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Tokyo → Kyoto (NOZOMI)</div><div class="train-type">Reserved · QR Ticket · Avi & Roni return leg</div></div><div class="train-price"><div class="train-price-total">$222</div><div class="train-price-each">$110.84 × 2</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 17, 2026 · Depart 20:45–20:59</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Seats</span><span>Oversized luggage storage (not guaranteed)</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Backup</span><span>If unavailable: full refund</span></div>
+    </div>
+    <a class="train-link" href="https://shinkansen-ticket.com/products/shinkansenticket-tokyo-kyoto?variant=49715052970305&sso=silent" target="_blank">🎫 View / manage booking</a>
+  </div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Narita Airport → Tokyo (N'EX)</div><div class="train-type">Reserved · Discounted fare · QR Voucher</div></div><div class="train-price"><div class="train-price-total">$37</div><div class="train-price-each">$18.41 × 2</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 17, 2026</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Time</span><span>Narita T1 19:17 / T2&3 19:20 → Tokyo 20:13</span></div>
+    </div>
+    <a class="train-link" href="https://shinkansen-ticket.com/products/airportexpressticket-narita-tokyo?variant=49948792979777&sso=silent" target="_blank">🎫 View / manage booking</a>
+  </div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Tokyo → Narita Airport (N'EX)</div><div class="train-type">Reserved · Discounted fare · QR Voucher</div></div><div class="train-price"><div class="train-price-total">$18.41</div><div class="train-price-each">1 ticket</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 17, 2026</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Time</span><span>Tokyo 17:33 → Narita T2&3 18:23 / T1 18:28</span></div>
+    </div>
+    <a class="train-link" href="https://shinkansen-ticket.com/products/naritaexpressticket-tokyo-narita?variant=49749436563777&sso=silent" target="_blank">🎫 View / manage booking</a>
+  </div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Kyoto → Tokyo (NOZOMI)</div><div class="train-type">Reserved · QR Ticket · Avi outbound leg</div></div><div class="train-price"><div class="train-price-total">$110.84</div><div class="train-price-each">1 ticket</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 17, 2026 · Depart 13:45–13:59</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Seats</span><span>Mt. Fuji side (not guaranteed)</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Backup</span><span>Later same-day train</span></div>
+    </div>
+    <a class="train-link" href="https://shinkansen-ticket.com/products/shinkansenticket-kyoto-tokyo?variant=49715051594049&sso=silent" target="_blank">🎫 View / manage booking</a>
+  </div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Kyoto → Tokyo (NOZOMI)</div><div class="train-type">Reserved · QR Ticket · Main group return leg</div></div><div class="train-price"><div class="train-price-total">$665</div><div class="train-price-each">$110.84 × 6</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 19, 2026 · Depart 11:30–11:44</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Seats</span><span>Mt. Fuji side · oversized luggage storage (not guaranteed)</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Group</span><span>OK to be seated apart, time is priority</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Backup</span><span>Later same-day train</span></div>
+    </div>
+    <a class="train-link" href="https://shinkansen-ticket.com/products/shinkansenticket-kyoto-tokyo?variant=49715051594049&sso=silent" target="_blank">🎫 View / manage booking</a>
+  </div>
+
+  <div class="train-total-row"><div><div class="total-label">Total train spend</div><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">24 tickets · 8 bookings · via shinkansen-ticket.com · ¥313,530 total</div></div><div class="total-amount">$1,937</div></div>
+
+  <div class="section-divider" style="background:linear-gradient(135deg,#065F46,#047857)"><div class="section-divider-label">🚌 Buses</div></div>
+
+  <p class="bookings-intro">Local bus routes around Takayama — no advance reservation needed, pay at the counter.</p>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Takayama → Kamikochi (via Hirayu Onsen)</div><div class="train-type">Nohi Bus · Kamikochi Line</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 14, 2026 · Day trip</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Route</span><span>Takayama → Hirayu Onsen (~60 min) → transfer → Kamikochi (~25 min)</span></div>
+    </div>
+    <a class="train-link" href="https://www.nouhibus.co.jp/route_bus/kamikochi-line-en/#timetable" target="_blank">🌐 Timetable</a>
+  </div>
+
+  <div class="train-card">
+    <div class="train-top"><div><div class="train-route">Takayama → Shirakawa-go → Kanazawa</div><div class="train-type">Nohi Bus · Shirakawa-go Route</div></div></div>
+    <div class="train-detail">
+      <div class="train-detail-row"><span class="train-detail-label">Date</span><span>Jul 15, 2026</span></div>
+      <div class="train-detail-row"><span class="train-detail-label">Route</span><span>Takayama → Shirakawa-go (~50 min) → direct bus → Kanazawa (~1h15)</span></div>
+    </div>
+    <a class="train-link" href="https://www.nouhibus.co.jp/route_bus/shirakawago_en/" target="_blank">🌐 Timetable</a>
+  </div>
+</div>
+
+<!-- ═══════════════ TO-DO ═══════════════ -->
+<div id="tab-todo" class="tab-panel">
+  <p class="bookings-intro">All tasks and bookings in one place. Click any item to check it off.</p>
+  <div style="margin-bottom:20px">
+    <div style="display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;color:#991B1B;background:#FEE2E2;padding:5px 12px;border-radius:6px;margin-bottom:10px">🔴 Do immediately</div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book TeamLab Borderless (Odaiba) — </span><a href="https://teamlab.art" target="_blank" style="color:#1a73e8">teamlab.art</a><div style="font-size:11px;color:#f87171;margin-top:2px">New venue, extremely popular</div></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Shibuya Sky — </span><a href="https://shibuya-sky.jp" target="_blank" style="color:#1a73e8">shibuya-sky.jp</a><div style="font-size:11px;color:#f87171;margin-top:2px">Timed entry — popular sunset slot</div></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Purchase 14-day JR Passes for all travellers before arriving in Japan</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Sumo keiko viewing — <a href="https://arashio.net" target="_blank" style="color:#1a73e8">arashio.net</a></span><div style="font-size:11px;color:#f87171;margin-top:2px">Limited spots — book months ahead</div></div></div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Check passport validity (valid past Jan 11, 2027)</span></div></div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book TeamLab Planets (Toyosu)<div style="font-size:11px;margin-top:2px">Booked: Jul 21 at 11:30am ✅ · <a href="https://teamlabplanets.dmm.com/en/mytickets/c0d4e6a370873f2018" target="_blank" style="color:#1a73e8">🎫 QR Tickets</a></div></span></div></div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Purchase 14-day JR Passes for all travellers</span></div></div>
+  </div>
+  <div style="margin-bottom:20px">
+    <div style="display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;color:#92400E;background:#FEF3C7;padding:5px 12px;border-radius:6px;margin-bottom:10px">🟡 Book 4–6 weeks before</div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Reserve Kaiseki dinner in Kyoto (Kikunoi, Mizai, or Nakamura)</span><div style="font-size:11px;color:#d97706;margin-top:2px">Top restaurants fill fast during Gion Matsuri</div></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Gion Matsuri Grand Parade reserved viewing seats (Jul 17)</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Verify seating on all train bookings (Mt. Fuji side / luggage storage requests are not guaranteed)</span><div style="font-size:11px;color:#d97706;margin-top:2px">Check confirmation RHV0XNZJV closer to departure</div></div></div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Avi's Jul 17 Shinkansen: Kyoto→Tokyo (~14:00) + Tokyo→Kyoto (~20:33)</span></div></div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Roni's N'EX + Shinkansen Tokyo→Kyoto for Jul 17 evening</span></div></div>
+  </div>
+  <div style="margin-bottom:20px">
+    <div style="display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;color:#1E40AF;background:#DBEAFE;padding:5px 12px;border-radius:6px;margin-bottom:10px">🔵 Book 2–4 weeks before</div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Reserve Hida Limited Express: Tokyo→Nagoya→Takayama (Jul 13)</span></div></div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Reserve Hida Limited Express: Takayama→Nagoya (Jul 15)</span></div></div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Reserve all Shinkansen seats (Tokyo↔Nagoya, Kyoto↔Tokyo)</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Nohi Bus: Takayama→Shirakawa-go (Jul 15 morning)</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Nohi Bus: Shirakawa-go→Kanazawa (Jul 15 midday)</span></div></div>
+    <div class="todo-item checked" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Thunderbird + Hokuriku Shinkansen: Kanazawa→Kyoto (Jul 16)</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Book Tea ceremony (En, Camellia Tea, or Urasenke) — Kyoto</span></div></div>
+  </div>
+  <div style="margin-bottom:20px">
+    <div style="display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;color:#065F46;background:#D1FAE5;padding:5px 12px;border-radius:6px;margin-bottom:10px">🟢 Before departure</div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Pocket WiFi or SIM cards — Ninja WiFi or IIJmio (7 people)</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Exchange or arrange yen cash (rural spots are cash-only)</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Get Suica / Pasmo IC cards for local transit</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Arrange travel insurance covering outdoor activities (Kamikochi hiking)</span></div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div style="flex:1"><span>Pack: light clothing, folding fan, sunscreen, walking shoes</span></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════ FUN FACTS ═══════════════ -->
+<div id="tab-funfacts" class="tab-panel">
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#1a1a2e"></div><div><div class="ff-section-title">🗾 Japan — The Big Picture</div><div class="ff-section-sub">General facts about the country you're visiting</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🚅</div><div class="ff-body"><div class="ff-tag ff-tag-record">World Record</div><div class="ff-title">The Shinkansen has never had a fatal accident in 60 years</div><div class="ff-text">Since 1964, Japan's bullet train has carried over 10 billion passengers without a single fatality from a crash. Average delay: under 1 minute. You'll ride it multiple times on this trip.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🏪</div><div class="ff-body"><div class="ff-tag ff-tag-weird">Only in Japan</div><div class="ff-title">4 million vending machines — one for every 30 people</div><div class="ff-text">They dispense not just drinks but hot meals, umbrellas, fresh eggs, underwear, and live crabs. In Tokyo you'll pass dozens every day.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🍣</div><div class="ff-body"><div class="ff-tag ff-tag-food">Food</div><div class="ff-title">Tokyo has more Michelin stars than any city in the world</div><div class="ff-text">Over 200 starred restaurants — more than Paris and New York combined. A ¥600 ramen can be as extraordinary as a ¥30,000 kaiseki. You'll experience both on this trip.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🗼</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Tokyo was nearly destroyed twice in 50 years — and rebuilt both times</div><div class="ff-text">The 1923 earthquake and 1945 firebombing each leveled much of the city. The city you're visiting is almost entirely built after 1945.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">😴</div><div class="ff-body"><div class="ff-tag ff-tag-weird">Only in Japan</div><div class="ff-title">Sleeping on the job can be a sign of dedication</div><div class="ff-text"><em>Inemuri</em> — sleeping in public during the work day — is considered proof you worked so hard you're exhausted. You'll see salarymen asleep on the Shinkansen. Completely acceptable.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#6B7280"></div><div><div class="ff-section-title">Jul 11 — Departure</div><div class="ff-section-sub">✈️ TLV → DXB → NRT</div></div></div>
+    <div class="ff-card"><div class="ff-icon">✈️</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Israel and Japan share a surprising post-war parallel</div><div class="ff-text">Both nations rebuilt from near-zero within a generation. Japan is Israel's largest trading partner in Asia. Tonight's flight connects two of the world's most technologically advanced small nations.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🇦🇪</div><div class="ff-body"><div class="ff-tag ff-tag-record">Record</div><div class="ff-title">Dubai Airport Terminal 3 is the largest building in the world by floor area</div><div class="ff-text">Dubai International handles over 87 million passengers a year. Terminal 3 covers 1.7 million square metres. Your 2-hour layover barely scratches the surface.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🌏</div><div class="ff-body"><div class="ff-tag ff-tag-culture">Culture</div><div class="ff-title">Many Israelis feel an immediate cultural resonance in Japan</div><div class="ff-text">Orderliness, intensity, compulsory military service, family loyalty — the two cultures share more than meets the eye, despite being 9,200 km apart.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#DC2626"></div><div><div class="ff-section-title">Jul 12 — Tokyo (Arrival)</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🏙️</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Tokyo was a fishing village called Edo until 1868</div><div class="ff-text">The world's largest metro area — 37 million people — grew from a small estuary settlement in under 160 years.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🚆</div><div class="ff-body"><div class="ff-tag ff-tag-record">Record</div><div class="ff-title">The N'EX runs to the second</div><div class="ff-text">JR East issues formal apology letters if a train is more than 5 minutes late. Station clocks are synchronized to the second. Welcome to the world's most time-precise country.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🏘️</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Kyobashi was once Tokyo's most elegant merchant district</div><div class="ff-text">The first bridge built after Edo Castle's construction. Today a quiet business district between Ginza and Tokyo Station — an ideal base most tourists overlook entirely.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#065F46"></div><div><div class="ff-section-title">Jul 13 — Takayama</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🏯</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Isolated by mountains, Takayama developed its own distinct culture</div><div class="ff-text">The Sanmachi Suji merchant quarter looks almost exactly as it did in the Edo period — no other Japanese city has preserved its old town this completely.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🏛️</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Takayama Jinya is the only surviving Edo-period government outpost in Japan</div><div class="ff-text">Functionally active from 1692 to 1969 — nearly 300 years. The interrogation room and torture chamber in the basement are sobering.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🍶</div><div class="ff-body"><div class="ff-tag ff-tag-food">Food</div><div class="ff-title">Takayama sake is exceptional because of its water</div><div class="ff-text">The Japanese Alps filter snowmelt through granite for decades before it emerges as ultra-pure spring water. When you see a cedar ball (sugidama) above a door, that's a brewery.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#1E40AF"></div><div><div class="ff-section-title">Jul 14 — Kamikochi</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🚗</div><div class="ff-body"><div class="ff-tag ff-tag-weird">Only in Japan</div><div class="ff-title">Private cars have been banned from Kamikochi since 1975</div><div class="ff-text">Despite 1.5 million visitors a year, the valley remains remarkably peaceful. The ban is now studied worldwide as a model for protecting fragile natural sites.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🌋</div><div class="ff-body"><div class="ff-tag ff-tag-nature">Nature</div><div class="ff-title">Taisho Pond was created by a volcanic eruption in 1915</div><div class="ff-text">Mount Yake — one of Japan's few active volcanoes — erupted and dammed the Azusa River. The dead tree stumps still visible in the water are the original forest, drowned over 100 years ago.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🧗</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Kamikochi was "discovered" by a British missionary in 1891</div><div class="ff-text">Reverend Walter Weston wrote a book that triggered Japan's mountaineering boom. A bronze relief near Kappa-bashi honors him — look for it as you cross the bridge.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#92400E"></div><div><div class="ff-section-title">Jul 15 — Shirakawa-go → Kanazawa</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🏠</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Shirakawa-go's roofs are built without nails — and rebuilt by the whole village</div><div class="ff-text">Only rope and wooden pegs. A single roof replacement (every 30–40 years) involves 200+ villagers working for one day in a tradition called <em>yui</em>.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🥷</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Shirakawa-go may have been a ninja training ground</div><div class="ff-text">Local legend holds the remote valley was used by the Shirakawa clan. Whether true or not, Kanazawa's Ninja Temple was built with 29 staircases across 7 floors — hiding in a 2-story shell.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🥇</div><div class="ff-body"><div class="ff-tag ff-tag-record">Record</div><div class="ff-title">Kanazawa produces 99% of all gold leaf made in Japan</div><div class="ff-text">One gram of gold beaten into sheets covering 1 square metre. The gold leaf on your ice cream tonight is almost certainly made within a few kilometres of where you're standing.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#7C3AED"></div><div><div class="ff-section-title">Jul 16 — Kanazawa → Kyoto</div></div></div>
+    <div class="ff-card"><div class="ff-icon">💣</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Kyoto was removed from the atomic bomb list by one man's honeymoon memory</div><div class="ff-text">US Secretary of War Henry Stimson personally removed Kyoto from the target list, having visited on his honeymoon. Hiroshima and Nagasaki were bombed instead.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🎏</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">The Gion Matsuri started as a plague-prevention ritual in 869 AD</div><div class="ff-text">1,157 years old and still running. The yamahoko floats weigh up to 12 tonnes and are assembled without a single nail.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🏯</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">The Ninja Temple has 29 staircases across 7 floors — but looks like a 2-story house</div><div class="ff-text">Hidden corridors, trapdoor rooms, a well connecting to an underground escape tunnel, and a pit trap for assassins. No actual ninja ever lived here — the complexity itself was the defense.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#7C3AED"></div><div><div class="ff-section-title">Jul 17 — Kyoto (Grand Parade + Arashiyama)</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🎋</div><div class="ff-body"><div class="ff-tag ff-tag-nature">Nature</div><div class="ff-title">The Arashiyama bamboo grows 90cm per day</div><div class="ff-text">Moso bamboo is the fastest-growing plant on Earth. The grove's acoustic quality — thousands of hollow stalks clicking in the wind — was designated one of Japan's "100 Soundscapes to Preserve."</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🐒</div><div class="ff-body"><div class="ff-tag ff-tag-nature">Nature</div><div class="ff-title">The Arashiyama monkeys remember human faces — for years</div><div class="ff-text">Japanese macaques recognize and remember individual human faces for years. They're also one of the only non-human primates known to wash food before eating.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🎭</div><div class="ff-body"><div class="ff-tag ff-tag-culture">Culture</div><div class="ff-title">Geisha in Kyoto are called Geiko — and train for 5+ years before their debut</div><div class="ff-text">Spot a maiko tonight by her longer hanging obi sash and elaborate hair ornaments. The Gion district is one of only a few remaining hanamachi (flower towns) left in Japan.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#7C3AED"></div><div><div class="ff-section-title">Jul 18 — Kyoto (Culture Day)</div></div></div>
+    <div class="ff-card"><div class="ff-icon">⛩️</div><div class="ff-body"><div class="ff-tag ff-tag-record">Record</div><div class="ff-title">Fushimi Inari's 10,000 torii gates were each donated by a business praying for profit</div><div class="ff-text">Each gate has the donor's name on the back. Gates cost ¥400,000–¥1,000,000 depending on size. At 6:30am as planned, the gates emerge from mist with almost nobody there.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">☕</div><div class="ff-body"><div class="ff-tag ff-tag-culture">Culture</div><div class="ff-title">The tea ceremony's founding master was ordered to commit ritual suicide</div><div class="ff-text">Sen no Rikyu codified chado in the 16th century. He was eventually ordered to commit <em>seppuku</em> by the shogun for becoming too powerful. He first performed one final, perfect tea ceremony.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🔥</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Kinkaku-ji was burned down by a student monk in 1950 — and inspired a Mishima novel</div><div class="ff-text">A 22-year-old novice set fire to the original. Author Yukio Mishima wrote a novel — "The Temple of the Golden Pavilion" — exploring obsession with beauty and destruction. The pavilion today has 5x more gold leaf than the original.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#DC2626"></div><div><div class="ff-section-title">Jul 19 — Kyoto → Tokyo</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🚥</div><div class="ff-body"><div class="ff-tag ff-tag-record">Record</div><div class="ff-title">Shibuya Crossing: 3,000 people per green light, half a million per day</div><div class="ff-text">Entirely self-organizing — no barriers, no marshals, almost never a collision. From Shibuya Sky above, it looks like a living organism.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">⛩️</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Yasaka Shrine has been operating continuously for 1,350 years</div><div class="ff-text">Founded in 656 AD. It's the origin point of the Gion Matsuri — all floats begin and end here. Open 24 hours.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">👗</div><div class="ff-body"><div class="ff-tag ff-tag-culture">Culture</div><div class="ff-title">Shibuya is where global youth culture is invented — in real time</div><div class="ff-text">Designers Rei Kawakubo, Yohji Yamamoto, and Issey Miyake all trace their roots here. Trends cycle in weeks, not seasons.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#DC2626"></div><div><div class="ff-section-title">Jul 20 — Tokyo Day 1</div></div></div>
+    <div class="ff-card"><div class="ff-icon">⛩️</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Senso-ji's golden statue has never been seen by anyone</div><div class="ff-text">According to legend, two fishermen pulled it from the Sumida River in 628 AD. It remains hidden inside the inner sanctum to this day. Nobody alive has ever seen it. 30 million visitors a year come anyway.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🎮</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Akihabara was a black market for electrical parts after WWII</div><div class="ff-text">It evolved into Japan's electronics hub, then the center of anime and gaming culture. "Otaku" culture born here is now a $24 billion global industry.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">👗</div><div class="ff-body"><div class="ff-tag ff-tag-weird">Only in Japan</div><div class="ff-title">Takeshita Street is 350 metres long — and shaped global fashion</div><div class="ff-text">Where Decora, Lolita, and Visual Kei were born. It famously inspired a Gwen Stefani album. Its energy comes from treating fashion as radical self-expression rather than commerce.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#DC2626"></div><div><div class="ff-section-title">Jul 21 — Tokyo Day 2</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🐟</div><div class="ff-body"><div class="ff-tag ff-tag-record">Record</div><div class="ff-title">A single bluefin tuna at Tsukiji once sold for $3.1 million</div><div class="ff-text">In January 2019, a 278kg tuna sold for ¥333 million — roughly $11,000 per kilogram. The tuna you'll eat for breakfast will cost significantly less.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🎨</div><div class="ff-body"><div class="ff-tag ff-tag-record">World Record</div><div class="ff-title">TeamLab Planets holds a Guinness World Record</div><div class="ff-text">Most visited museum by a single art group — 2.5 million visitors in one year. Remember: it's barefoot and involves wading through water. Wear easy shoes.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🚗</div><div class="ff-body"><div class="ff-tag ff-tag-culture">Culture</div><div class="ff-title">JDM cars became global legends partly because they were illegal to import</div><div class="ff-text">The Nissan Skyline GT-R, Toyota Supra, Honda NSX — sold exclusively in Japan, then immortalized by Gran Turismo and Fast & Furious. Daikoku PA is where they gather on weekend nights.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#DC2626"></div><div><div class="ff-section-title">Jul 22 — Tokyo Day 3</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🤼</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Sumo is a 1,500-year-old Shinto ritual — not just a sport</div><div class="ff-text">The ring (dohyo) is consecrated ground blessed by a Shinto priest. The salt thrown before each bout is a purification ritual. A wrestler's entire life is governed by tradition.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🎵</div><div class="ff-body"><div class="ff-tag ff-tag-culture">Culture</div><div class="ff-title">Shimokitazawa was nearly destroyed by a highway — and fought back for a decade</div><div class="ff-text">Residents launched an extraordinary protest that eventually forced the road underground. The streets you'll wander exist because of one of Japan's most successful grassroots urban campaigns.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🍺</div><div class="ff-body"><div class="ff-tag ff-tag-weird">Only in Japan</div><div class="ff-title">Golden Gai's 200 bars survived Tokyo's redevelopment through sheer stubbornness</div><div class="ff-text">Developers, yakuza intimidation, and arson attempts all failed to move the bar owners. The result: 200 bars in an area the size of a supermarket car park, on some of the world's most valuable land.</div></div></div>
+  </div>
+
+  <div class="ff-section"><div class="ff-section-header"><div class="ff-section-dot" style="background:#6B7280"></div><div><div class="ff-section-title">Jul 23 — Departure</div></div></div>
+    <div class="ff-card"><div class="ff-icon">✈️</div><div class="ff-body"><div class="ff-tag ff-tag-history">History</div><div class="ff-title">Haneda opened in 1931 — and was seized by the US military after WWII</div><div class="ff-text">Returned to Japan in 1952. Terminal 3, where you depart tonight, opened in 2010.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🎁</div><div class="ff-body"><div class="ff-tag ff-tag-culture">Culture</div><div class="ff-title">Omiyage — you must bring gifts from every trip, for everyone</div><div class="ff-text">A social obligation so deeply ingrained that every airport sells beautifully packaged regional specialties for exactly this purpose. Budget ¥5,000–10,000 per person. The people back home are counting on you.</div></div></div>
+    <div class="ff-card"><div class="ff-icon">🌅</div><div class="ff-body"><div class="ff-tag ff-tag-culture">Culture</div><div class="ff-title">Japan has a word for the bittersweet feeling of a journey ending</div><div class="ff-text"><em>Mono no aware</em> (物の哀れ) — the gentle sadness of transience. The feeling of a beloved place disappearing in an airport window. As your flight lifts from Haneda tonight, you'll probably understand exactly what it means.</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════ PRACTICAL ═══════════════ -->
+<div id="tab-practical" class="tab-panel">
+  <div class="practical-card"><div class="practical-icon">💴</div><div><div class="practical-title">Cash</div><div class="practical-text">Japan remains largely cash-based. Withdraw at 7-Eleven or Japan Post ATMs. Shirakawa-go and Kamikochi are largely card-free.</div></div></div>
+  <div class="practical-card"><div class="practical-icon">🎫</div><div><div class="practical-title">JR Pass</div><div class="practical-text">14-day JR Pass covers N'EX, Hida Limited Express, Hikari Shinkansen, Thunderbird. Does NOT cover Nozomi — use Hikari or pay separately.</div></div></div>
+  <div class="practical-card"><div class="practical-icon">🌡️</div><div><div class="practical-title">July heat</div><div class="practical-text">Tokyo and Kyoto average 33–36°C with high humidity. Carry a folding fan, stay hydrated, wear light clothing. Kamikochi at 1,500m will feel like a blessing.</div></div></div>
+  <div class="practical-card"><div class="practical-icon">📱</div><div><div class="practical-title">Connectivity</div><div class="practical-text">Pocket WiFi or SIM card essential for navigation. Book via Ninja WiFi or IIJmio before departure.</div></div></div>
+  <div class="practical-card"><div class="practical-icon">👟</div><div><div class="practical-title">Shoes</div><div class="practical-text">You'll walk 15–20km/day. Comfortable sneakers are non-negotiable. For temples: shoes easy to slip on and off.</div></div></div>
+  <div class="practical-card"><div class="practical-icon">🎒</div><div><div class="practical-title">Luggage forwarding</div><div class="practical-text">Ship bags between cities via takuhaibin (~¥2,000/bag). Ask at any hotel front desk. Huge convenience on the Tokyo→Takayama→Kyoto legs.</div></div></div>
+</div>
+
+</div><!-- end content -->
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('tab-' + name);
+  panel.classList.add('active');
+  panel.style.display = 'block';
+  btn.classList.add('active');
+}
+
+function toggleTodo(el) {
+  el.classList.toggle('checked');
+  const section = el.parentElement;
+  if (el.classList.contains('checked')) {
+    section.appendChild(el);
+  } else {
+    const firstChecked = [...section.querySelectorAll('.todo-item.checked')].find(i => i !== el);
+    section.insertBefore(el, firstChecked || null);
+  }
+}
+
+const modals = {
+  m11:{title:'✈️ Fri Jul 11 — Departure',sub:'Tel Aviv → Dubai → Tokyo',transport:null,items:[['16:00','t','Head to Ben Gurion Airport (TLV)'],['19:25','t','✈️ EK2451 departs Tel Aviv (TLV)'],['00:10','t','Land Dubai (DXB) +1 (Sat Jul 12)'],['~01:00','a','Transit Dubai — DXB Terminal 3'],['02:40','t','✈️ EK318 departs Dubai → Tokyo Narita'],['Note','n','Sleep on the Dubai→Tokyo leg (~9.5 hrs). Arrive Narita Sat 17:35.']]},
+  m12:{title:'🗼 Sat Jul 12 — Tokyo',sub:'Arrival day',transport:null,items:[['17:35','t','Land at Narita Airport (EK318)'],['~18:35','t','Clear immigration & baggage (~60 min)'],['~19:15','t','N\'EX train → Tokyo Station · <a href="https://maps.google.com/?q=Tokyo+Station" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['~20:15','t','Check in — Hotel Intergate Tokyo Kyobashi · <a href="https://maps.google.com/?q=Hotel+Intergate+Tokyo+Kyobashi" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['~21:00','f','Light dinner — ramen or convenience store'],['Note','n','Early sleep. Tomorrow is a long travel day.']]},
+  m13:{title:'⛰️ Sun Jul 13 — Takayama',sub:'Travel + afternoon exploration',transport:'08:00 Nozomi → Nagoya (09:34) → 09:43 Hida Limited Express → Takayama (13:15)',items:[['08:00','t','🚅 Nozomi departs Tokyo → Nagoya'],['09:43','t','🚂 Hida Limited Express → Takayama (arr. 13:15)'],['13:15','t','Check in — HOTEL AMANEK · <a href="https://maps.google.com/?q=HOTEL+AMANEK+Hida+Takayama" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['14:00','f','Lunch: Hida beef skewer'],['15:00','a','Sanmachi Suji · <a href="https://maps.google.com/?q=Sanmachi+Suji+Takayama" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['16:30','a','Takayama Jinya · <a href="https://maps.google.com/?q=Takayama+Jinya" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['17:30','a','Hida Folk Village · <a href="https://maps.google.com/?q=Hida+Folk+Village+Takayama" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['19:00','f','Dinner: Hida beef kaiseki'],['20:30','a','Evening walk — illuminated Sanmachi Suji']]},
+  m14:{title:'🏔️ Mon Jul 14 — Kamikochi',sub:'Full day trip from Takayama',transport:null,items:[['07:00','t','🚌 Bus: Takayama → Hirayu Onsen (~60 min) · <a href="https://www.nouhibus.co.jp/route_bus/kamikochi-line-en/#timetable" target="_blank" style="color:#1a73e8;font-size:11px">🌐 Timetable</a>'],['08:30','t','Transfer bus → Kamikochi (~25 min) · <a href="https://maps.google.com/?q=Kamikochi+Nagano" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['09:00','a','Kappa-bashi Bridge · <a href="https://maps.google.com/?q=Kappabashi+Bridge+Kamikochi" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['09:30','a','Hike: Kappa-bashi → Myojin Pond → Tokusawa (2–3 hrs)'],['12:30','f','Lunch at Gosenjaku Lodge or riverside picnic'],['14:00','a','Taisho Pond · <a href="https://maps.google.com/?q=Taisho+Pond+Kamikochi" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['15:30','t','🚌 Return bus → Takayama (arr. ~17:30)'],['18:00','f','Dinner: Hida Beef BBQ'],['Note','n','Pack: fleece, hiking shoes, cash, sunscreen.']]},
+  m15:{title:'🛖 Tue Jul 15 — Shirakawa-go → Kanazawa',sub:'UNESCO stop + Kanazawa afternoon',transport:'Bus Takayama→Shirakawa-go (~50 min), then direct bus→Kanazawa (~1h15)',items:[['08:30','t','🚌 Bus: Takayama → Shirakawa-go · <a href="https://www.nouhibus.co.jp/route_bus/shirakawago_en/" target="_blank" style="color:#1a73e8;font-size:11px">🌐 Timetable</a> · <a href="https://maps.google.com/?q=Shirakawa-go+Gifu" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['09:20','a','Shiroyama viewpoint · <a href="https://maps.google.com/?q=Shiroyama+Viewpoint+Shirakawa-go" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['10:00','a','Walk the village — enter a farmhouse (¥300)'],['11:30','f','Lunch: soba, river fish, or hoba miso'],['12:30','t','🚌 Direct bus → Kanazawa (arr. ~13:45)'],['14:00','t','Check in — The Sanaraku Hotel · <a href="https://maps.google.com/?q=THE+HOTEL+SANRAKU+KANAZAWA" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['14:30','a','Nagamachi Samurai District · <a href="https://maps.google.com/?q=Nagamachi+Samurai+District+Kanazawa" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['15:30','a','Higashi Chaya + gold leaf soft serve · <a href="https://maps.google.com/?q=Higashi+Chaya+District+Kanazawa" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['17:00','f','Omicho Market · <a href="https://maps.google.com/?q=Omicho+Market+Kanazawa" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['18:30','f','Dinner: kaisendon or Kanazawa omakase'],['Note','n','Early night — Kenroku-en at dawn tomorrow.']]},
+  m16:{title:'🎏 Wed Jul 16 — Kanazawa → Kyoto',sub:'Kenroku-en morning + Yoiyama evening',transport:'Hokuriku Shinkansen → Tsuruga + Thunderbird → Kyoto. Both JR Pass covered.',items:[['07:30','a','Kenroku-en Garden (near-empty at dawn) · <a href="https://maps.google.com/?q=Kenroku-en+Kanazawa" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['08:30','a','Kanazawa Castle Park · <a href="https://maps.google.com/?q=Kanazawa+Castle+Park" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['09:30','t','Check out, head to Kanazawa Station'],['10:30','t','🚅 Kanazawa → Kyoto (arr. ~12:30)'],['13:00','t','Check in — The Cross Hotel Kyoto · <a href="https://maps.google.com/?q=Cross+Hotel+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['14:00','a','Kiyomizu-dera + Ninenzaka / Sannenzaka · <a href="https://maps.google.com/?q=Kiyomizudera+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['16:00','f','Nishiki Market · <a href="https://maps.google.com/?q=Nishiki+Market+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['18:00','a','🎏 Gion Matsuri Yoiyama — illuminated floats, street stalls'],['Note','n','Early night — tomorrow starts at 06:30 with the bamboo grove.']]},
+  m17:{title:'🏯 Thu Jul 17 — Kyoto',sub:'Bamboo Grove at dawn + Grand Parade',transport:null,items:[['06:30','a','🎋 Arashiyama Bamboo Grove (dawn, near-empty) · <a href="https://maps.google.com/?q=Arashiyama+Bamboo+Grove+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['07:00','a','Tenryu-ji garden outer walk (free) · <a href="https://maps.google.com/?q=Tenryuji+Arashiyama+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['07:30','f','☕ % Arabica river coffee · <a href="https://maps.google.com/?q=Arabica+Arashiyama+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['08:30','t','Return to central Kyoto by Randen tram (~30 min)'],['09:00','a','🎏 Yamahoko Junko Grand Float Procession — Shijo-Karasuma · <a href="https://maps.google.com/?q=Shijo+Karasuma+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['11:30','f','Lunch near the parade route'],['13:00','a','Iwatayama Monkey Park (optional) · <a href="https://maps.google.com/?q=Iwatayama+Monkey+Park+Arashiyama" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['15:00','a','Gion district · <a href="https://maps.google.com/?q=Hanamikoji+Street+Gion+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['18:00','f','Pontocho Alley food crawl · <a href="https://maps.google.com/?q=Pontocho+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['Note','n','🧳 Avi departs 14:00 for Narita. Returns with Roni ~23:15.']]},
+  mavi:{title:'🧳 Thu Jul 17 — Avi & Roni',sub:'Kyoto → Narita → Kyoto',transport:'Hikari Shinkansen Kyoto→Tokyo, N\'EX to Narita, return same evening. All JR Pass covered.',items:[['14:00','t','🚅 Avi: Hikari Shinkansen Kyoto → Tokyo (arr. ~16:40)'],['17:15','t','🚃 N\'EX Tokyo Station → Narita (arr. ~18:15)'],['17:35','t','✈️ Roni lands Narita (EK318)'],['~18:30','a','Avi meets Roni at arrivals hall · <a href="https://maps.google.com/?q=Narita+International+Airport+Terminal+1" target="_blank" style="color:#1a73e8;font-size:11px">📍 Narita T1</a>'],['~19:15','t','🚃 N\'EX Narita → Tokyo Station (arr. ~20:15)'],['20:33','t','🚅 Hikari Shinkansen Tokyo → Kyoto (arr. ~23:13)'],['~23:15','t','Arrive Kyoto. Roni joins the group 🎉'],['Note','n','Pack light — day bag only. JR Pass covers all legs.']]},
+  m18:{title:'🍵 Fri Jul 18 — Kyoto',sub:'Culture day',transport:null,items:[['06:30','a','Fushimi Inari Taisha — before 8am · <a href="https://maps.google.com/?q=Fushimi+Inari+Taisha+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['09:30','a','Kinkaku-ji (Golden Pavilion) · <a href="https://maps.google.com/?q=Kinkakuji+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['11:00','a','Ryoan-ji rock garden · <a href="https://maps.google.com/?q=Ryoanji+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['12:30','f','Lunch: Obanzai (Kyoto home cooking)'],['14:00','a','Tea ceremony experience (~1 hr)'],['15:30','a','Philosopher\'s Path · <a href="https://maps.google.com/?q=Philosopher\'s+Path+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['17:00','a','Ginkaku-ji (Silver Pavilion) · <a href="https://maps.google.com/?q=Ginkakuji+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['19:00','f','Kaiseki dinner — Kikunoi, Mizai, or Nakamura'],['Note','n','Geisha spotting: Hanamikoji St, Gion, 17:30–19:00.']]},
+  m19:{title:'🚅 Sat Jul 19 — Kyoto → Tokyo',sub:'Travel day',transport:'Hikari Shinkansen Kyoto → Tokyo (~2h15, arr. ~13:15)',items:[['Morning','a','Yasaka Shrine in Gion · <a href="https://maps.google.com/?q=Yasaka+Shrine+Kyoto" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['~11:00','t','🚅 Shinkansen Kyoto → Tokyo (arr. ~13:15)'],['14:00','t','Check in — Hotel Groove Shinjuku · <a href="https://maps.google.com/?q=Hotel+Groove+Shinjuku+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['15:00','a','Shibuya Scramble Crossing · <a href="https://maps.google.com/?q=Shibuya+Crossing+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['16:00','a','Shibuya Sky · <a href="https://maps.google.com/?q=Shibuya+Sky+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['19:00','f','Piss Alley (Omoide Yokocho) · <a href="https://maps.google.com/?q=Omoide+Yokocho+Shinjuku+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>']]},
+  m20:{title:'🏙️ Sun Jul 20 — Tokyo',sub:'Tokyo day 1',transport:null,items:[['08:00','a','Harajuku — Takeshita Street · <a href="https://maps.google.com/?q=Takeshita+Street+Harajuku+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['10:30','a','Meiji Jingu Shrine · <a href="https://maps.google.com/?q=Meiji+Jingu+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['12:00','f','Lunch: Omotesando area · <a href="https://maps.google.com/?q=Omotesando+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['13:30','a','Akihabara · <a href="https://maps.google.com/?q=Akihabara+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['17:00','a','Asakusa — Senso-ji Temple · <a href="https://maps.google.com/?q=Senso-ji+Temple+Asakusa+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['19:00','f','Dinner: tempura at Daikokuya or monjayaki']]},
+  m21:{title:'🏙️ Mon Jul 21 — Tokyo',sub:'Tokyo day 2',transport:null,items:[['08:00','f','Tsukiji Outer Market — fresh sushi breakfast · <a href="https://maps.google.com/?q=Tsukiji+Outer+Market+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['10:30','t','Head to Toyosu (Yurikamome or subway, ~25 min)'],['11:30','a','✅ TeamLab Planets BOOKED · <a href="https://maps.google.com/?q=teamLab+Planets+Tokyo+Toyosu" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a> · <a href="https://teamlabplanets.dmm.com/en/mytickets/c0d4e6a370873f2018" target="_blank" style="color:#1a73e8;font-size:11px">🎫 QR Tickets</a>'],['13:30','f','Lunch near Toyosu or back in Ginza'],['15:00','a','Ginza — flagship stores, Itoya stationery · <a href="https://maps.google.com/?q=Ginza+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['17:00','a','Odaiba — TeamLab Borderless + Gundam statue · <a href="https://maps.google.com/?q=teamLab+Borderless+Odaiba+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['20:00','a','Daikoku PA — JDM car culture · <a href="https://maps.google.com/?q=Daikoku+Parking+Area+Kanagawa" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['21:30','f','Ramen: Ichiran, Fuunji, or Afuri']]},
+  m22:{title:'🏙️ Tue Jul 22 — Tokyo',sub:'Tokyo day 3',transport:null,items:[['Morning','a','Sumo keiko viewing · <a href="https://maps.google.com/?q=Arashio+Stable+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Arashio Stable</a>'],['10:00','a','Shinjuku — Kabukicho, Godzilla, Don Quijote · <a href="https://maps.google.com/?q=Kabukicho+Shinjuku+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['12:00','f','Lunch: Shinjuku Gyoen picnic or Golden Gai ramen'],['14:00','a','Shimokitazawa · <a href="https://maps.google.com/?q=Shimokitazawa+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['17:00','a','Shibuya Crossing — evening rush hour · <a href="https://maps.google.com/?q=Shibuya+Crossing+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Map</a>'],['19:00','f','Piss Alley or Golden Gai · <a href="https://maps.google.com/?q=Golden+Gai+Shinjuku+Tokyo" target="_blank" style="color:#1a73e8;font-size:11px">📍 Golden Gai</a>'],['21:00','n','Pack tonight. Leave for Haneda ~22:00 tomorrow.']]},
+  m23:{title:'✈️ Wed Jul 23 — Departure',sub:'Tokyo → Haneda → Dubai → Tel Aviv',transport:null,items:[['Free','a','Last day in Tokyo — revisit favourites or last shopping'],['~22:00','t','Head to Haneda (HND) — Keikyu Line from Shinjuku (~35 min) · <a href="https://maps.google.com/?q=Tokyo+Haneda+Airport" target="_blank" style="color:#1a73e8;font-size:11px">📍 HND</a>'],['00:05','t','✈️ EK313 Haneda → Dubai (arr. 05:40 Jul 24)'],['07:40','t','✈️ EK2268 Dubai → Tel Aviv (arr. 10:25)'],['Note','n','Check-in closes ~90 min before. Arrive HND by 22:30.']]}
+};
+
+const tc = {t:'#6B728044',a:'#1D4ED844',f:'#B4530944',n:'#7C3AED44'};
+
+function openModal(id) {
+  const d = modals[id]; if (!d) return;
+  let html = `<div class="modal-title">${d.title}</div><div class="modal-sub">${d.sub}</div>`;
+  if (d.transport) html += `<div class="modal-transport">🗺️ ${d.transport}</div>`;
+  d.items.forEach(([time,type,text]) => {
+    html += `<div class="modal-row"><div class="modal-time">${time}</div><div class="modal-line" style="background:${tc[type]}"></div><div class="modal-text${type==='n'?' note':''}">${text}</div></div>`;
+  });
+  document.getElementById('modal-content').innerHTML = html;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
